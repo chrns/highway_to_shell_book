@@ -24,7 +24,7 @@ done
 # quote.mrs
 echo "... .... .- .-.. .-.. / .. / .-. . ..-. ..- ... . / -- -.-- / -.. .. -. -. . .-. / -... . -.-. .- ..- ... . / .. / -.. --- / -. --- - / ..-. ..- .-.. .-.. -.-- / ..- -. -.. . .-. ... - .- -. -.. / - .... . / .--. .-. --- -.-. . ... ... / --- ..-. / -.. .. --. . ... - .. --- -. ..--.." > highway/data/quote.mrs
 
-echo "Let's create list of dudes"
+echo "Let's generate some data"
 # people.tsv / years.tsv
 cat > highway/data/dudes.tsv <<'EOF'
 1	Galois
@@ -102,3 +102,18 @@ Friction-Free Butter
 Thermodynamic Ice Cream
 Doppler Bananas
 EOF
+
+echo "Now let's copy some files"
+URL_BASE="https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials/"
+
+curl ${URL_BASE}/game.sh > highway/game.sh
+chmod +x ./game.sh
+
+curl ${URL_BASE}/README.md > highway/chsm/README.md
+curl ${URL_BASE}/Makefile > highway/chsm/Makefile
+
+SRCS=(algos.h main.c main.h rtu.c rtu.h stm32.c stm32.h)
+for f in "${SRCS[@]}"; do
+  curl "$BASE_URL/chsm/$f" > highway/chsm/src/$f
+done
+
