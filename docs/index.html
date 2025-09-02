@@ -348,7 +348,7 @@
 
       <div>
         <div class="kicker">Linux · CLI · Bash</div>
-        <h1>HIGHWAY TO SHELL</h1>
+        <h1 id="about">HIGHWAY TO SHELL</h1>
         <div class="subtitle">Короткий и практичный заезд в командную строку</div>
         <p class="lead">Пайпы и потоки, фильтры <code>grep/sed/awk</code>, процессы и сигналы, сеть, <code>tmux</code> и
           <code>tput</code>. Все примеры воспроизводимы на Ubuntu 24.04, данные разворачиваются одной командой.</p>
@@ -386,7 +386,7 @@
       </div>
 
       <pre
-        class="setup-code"><code id="setupCmd" translate="no">bash <(curl -fsSL "https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials/gen_data.sh")</code></pre>
+        class="setup-code"><code id="setupCmd" translate="no">bash <(wget -q "https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials/gen_data.sh -O -")</code></pre>
     </section>
 
     <!-- <section class="features">

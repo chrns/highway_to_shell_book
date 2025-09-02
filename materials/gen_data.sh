@@ -3,7 +3,7 @@ set -euo pipefail
 
 echo "Preparing the system"
 sudo apt update
-sudo apt install mc htop tmux git build-essential
+sudo apt install mc htop tmux git build-essential curl
 
 echo "Creating a folder for test, ~/highway"
 mkdir -p highway/data highway/chsm/src
