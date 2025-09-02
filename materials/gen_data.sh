@@ -104,16 +104,15 @@ Doppler Bananas
 EOF
 
 echo "Now let's copy some files"
-URL_BASE="https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials/"
+URL_BASE="https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials"
 
-curl ${URL_BASE}/game.sh > highway/game.sh
-chmod +x ./game.sh
+curl -o highway/game.sh ${URL_BASE}/game.sh
+chmod +x highway/game.sh
 
-curl ${URL_BASE}/README.md > highway/chsm/README.md
-curl ${URL_BASE}/Makefile > highway/chsm/Makefile
+curl -o highway/chsm/README.md ${URL_BASE}/chsm/README.md
+curl -o highway/chsm/Makefile ${URL_BASE}/chsm/Makefile
 
 SRCS=(algos.h main.c main.h rtu.c rtu.h stm32.c stm32.h)
 for f in "${SRCS[@]}"; do
-  curl "$BASE_URL/chsm/$f" > highway/chsm/src/$f
+  curl -o highway/chsm/src/$f "$URL_BASE/chsm/src/$f"
 done
-

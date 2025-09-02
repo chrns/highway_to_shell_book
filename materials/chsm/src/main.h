@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <unistd.h>
 
 #define PROGRAM_NAME "chsm"
 #define PROGRAM_VERSION "0.1.0"
