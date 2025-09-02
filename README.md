@@ -1,2 +1,3 @@
-# highway_to_shell_book
+# Highway to Shell
+
 Materials for the book "Highway to the Shell"

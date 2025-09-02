@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Highway to Shell — книга о командной строке Linux</title>
+  <meta name="description"
+    content="Краткое, практичное руководство по командной строке Linux. Менее слов — больше сигнала." />
+  <meta property="og:title" content="Highway to Shell" />
+  <meta property="og:description"
+    content="Краткое, практичное руководство по командной строке Linux. Все примеры воспроизводимы на Ubuntu 24.04." />
+  <meta property="og:image" content="assets/cover.png" />
+  <meta property="og:type" content="website" />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Sans+Caption:wght@400;700&family=PT+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fff;
+      --fg: #121212;
+      --muted: #666;
+      --accent: #d62d2d;
+      --btn: #0e7d3b;
+      --btnfg: #fff;
+      --card: #f7f7f8;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "PT Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif
+    }
+
+    h1, h2, .subtitle, .kicker { font-family: "PT Sans Caption", "PT Sans", sans-serif; }
+    code, pre, .setup-code { font-family: "PT Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    a {
+      color: inherit
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 48px;
+      align-items: center
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Book mockup */
+    .book {
+      position: relative;
+      width: 420px;
+      height: 630px;
+      margin: auto;
+      transform: translateZ(0);
+      filter: drop-shadow(0 24px 36px rgba(0, 0, 0, .17));
+    }
+
+    .book .cover {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    .book .cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .kicker {
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 12px
+    }
+
+    h1 {
+      font-size: 56px;
+      line-height: 1.05;
+      margin: .2em 0 .1em 0
+    }
+
+    .subtitle {
+      font-size: 26px;
+      color: #3a3a3a;
+      margin: 0 0 14px
+    }
+
+    .lead {
+      color: var(--muted);
+      margin: 12px 0 18px
+    }
+
+    .cta-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    .btn.primary {
+      background: var(--btn);
+      color: var(--btnfg)
+    }
+
+    .btn.secondary {
+      border: 1px solid #e3e3e7;
+      background: #fff
+    }
+
+    .retail {
+      margin-top: 28px
+    }
+
+    .retail h3 {
+      font-size: 14px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 12px
+    }
+
+    .stores {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .store {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
+      height: 54px;
+      padding: 10px 16px;
+      border: 1px solid #e3e3e7;
+      border-radius: 12px;
+      background: #fff;
+      text-decoration: none;
+      font-weight: 700
+    }
+
+    .store:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .06)
+    }
+
+    /* Feature blurbs */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px
+    }
+
+    .feature {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px
+    }
+
+    .feature h4 {
+      margin: 0 0 8px
+    }
+
+    @media (max-width: 960px) {
+      .features {
+        grid-template-columns: 1fr
+      }
+    }
+
+    footer {
+      margin: 64px 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center
+    }
+
+    .store {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 170px;
+      height: 54px;
+      padding: 10px 16px;
+      border: 1px solid #e3e3e7;
+      border-radius: 12px;
+      background: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .store img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    /* Container */
+    .setup-box {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+      margin: 28px 0;
+    }
+
+    /* Header (tabs + copy) */
+    .setup-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #dcdcdc;
+      padding: 10px 12px 0;
+      gap: 8px;
+    }
+
+    .setup-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .setup-tab {
+      border: 0;
+      background: #cfcfcf;
+      padding: 10px 14px;
+      border-radius: 8px 8px 0 0;
+      font-weight: 700;
+      cursor: default;
+    }
+
+    .setup-tab.is-active {
+      background: #e9e9e9;
+    }
+
+    .setup-copy {
+      margin-left: auto;
+      margin-right: 8px;
+      border: 0;
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, .05);
+    }
+
+    .setup-copy.copied {
+      background: #0e7d3b;
+      color: #fff;
+    }
+
+    /* Code area */
+    .setup-code {
+      margin: 0;
+      padding: 18px 20px;
+      background: #223038;
+      color: #d7ff58;
+      /* тёмный фон + «неоновый» текст */
+      font: 14px/1.6 SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+      white-space: pre-wrap;
+      /* перенос длинных строк */
+      overflow-wrap: anywhere;
+      /* и внутри длинных «слов» */
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+
+  <script>
+    (function () {
+      // делегирование: сработает и при нескольких блоках
+      document.addEventListener('click', async (ev) => {
+        const btn = ev.target.closest('[data-copy]');
+        if (!btn) return;
+
+        const target = document.querySelector(btn.getAttribute('data-copy'));
+        if (!target) return;
+
+        const text = target.textContent;
+
+        // Пытаемся через современный API (требует HTTPS и жест)
+        try {
+          await navigator.clipboard.writeText(text);
+          flash(btn, 'Copied!');
+          return;
+        } catch (_) {
+          // фоллбэк для Safari/старых браузеров/локального file://
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-1000px';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          flash(btn, ok ? 'Copied!' : 'Copy failed');
+        }
+      });
+
+      function flash(btn, label) {
+        const old = btn.textContent;
+        btn.classList.add('copied');
+        btn.textContent = label;
+        setTimeout(() => { btn.textContent = old; btn.classList.remove('copied'); }, 1200);
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="book" aria-hidden="true">
+        <div class="cover"><img src="assets/cover.png" alt="Обложка Highway to Shell"></div>
+      </div>
+
+      <div>
+        <div class="kicker">Linux · CLI · Bash</div>
+        <h1>HIGHWAY TO SHELL</h1>
+        <div class="subtitle">Короткий и практичный заезд в командную строку</div>
+        <p class="lead">Пайпы и потоки, фильтры <code>grep/sed/awk</code>, процессы и сигналы, сеть, <code>tmux</code> и
+          <code>tput</code>. Все примеры воспроизводимы на Ubuntu 24.04, данные разворачиваются одной командой.</p>
+
+        <div class="cta-row">
+
+          <a class="store" href="https://leanpub.com/highway-to-shell-ru" target="_blank" rel="noopener">
+            <img src="assets/leanpub.png" alt="" width="24" height="24" loading="lazy" decoding="async">
+            <span>Leanpub (RU)</span>
+          </a>
+
+          <a class="store" href="https://robotclass.ru/" target="_blank" rel="noopener">
+            <img src="assets/roc.png" alt="" width="24" height="24" loading="lazy" decoding="async">
+            <span>RobotClass (RU)</span>
+          </a>
+          <a class="btn secondary" href="sample/h2s_sample.pdf" target="_blank" rel="noopener">Скачать
+            фрагмент (PDF)</a>
+          <a class="btn secondary" href="https://github.com/chrns/highway_to_shell_book" target="_blank"
+            rel="noopener">Репозиторий</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="setup-box" aria-label="Подготовка окружения">
+      <div class="setup-head">
+        <div class="setup-tabs">
+          <button class="setup-tab is-active" type="button" aria-selected="true">
+            Prepare environment (curl | bash)
+          </button>
+        </div>
+        <button class="setup-copy" type="button" data-copy="#setupCmd" aria-label="Скопировать команду">
+          Copy
+        </button>
+      </div>
+
+      <pre
+        class="setup-code"><code id="setupCmd" translate="no">bash <(curl -fsSL "https://raw.githubusercontent.com/chrns/highway_to_shell_book/refs/heads/main/materials/gen_data.sh")</code></pre>
+    </section>
+
+    <!-- <section class="features">
+      <div class="feature">
+        <h4>Практичный фокус</h4>
+        <p>Только рабочие приёмы: пайпы, регулярки, фильтры и процессы.</p>
+      </div>
+      <div class="feature">
+        <h4>Минимальный датасет</h4>
+        <p>Одна команда — и у вас локально все файлы для примеров.</p>
+      </div>
+      <div class="feature">
+        <h4>Две версии</h4>
+        <p>Русская и английская — купите отдельно или одним комплектом.</p>
+      </div>
+    </section> -->
+
+    <footer>
+      © 2025 chrns · <a href="mailto:alex@chrns.com">alex@chrns.com</a>
+    </footer>
+  </div>
+</body>
+
+</html>
